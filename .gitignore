@@ -1,0 +1,48 @@
+# Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Unity generated files
+*.pidb
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.csproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity crash reports
+sysinfo.txt
+crashlytics/
+
+# Build output
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Dependencies
+/[Aa]ssets/[Pp]lugins/
+/[Aa]ssets/[Pp]ackages/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Visual Studio / Rider
+/.idea/
+*.sln.iml
