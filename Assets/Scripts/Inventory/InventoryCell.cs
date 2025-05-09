@@ -7,7 +7,7 @@ using UnityEngine.Serialization; // Подключаем пространств�
 
 namespace Inventory
 {
-    public class InventoryCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+    public partial class InventoryCell : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [FormerlySerializedAs("currentItem")] public ItemScriptableObject currentItemScriptableObject;
         public Image image;
@@ -42,6 +42,7 @@ namespace Inventory
 
         public void RemoveItem()
         {
+            SpawnObject(currentItemScriptableObject.Prefab);
             currentItemScriptableObject = null;
             UpdateCell();
         }
@@ -54,6 +55,11 @@ namespace Inventory
             }
         }
 
+        private void SpawnObject(GameObject prefabToSpawn)
+        {
+            Instantiate(prefabToSpawn, Vector3.zero, Quaternion.identity);
+        }
+        
         public void OnDrag(PointerEventData eventData)
         {
         }

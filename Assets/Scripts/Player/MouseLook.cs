@@ -10,7 +10,7 @@ namespace Player
         public float rotationSpeedVer = 5.0f;
 
         public float maxVert = 45.0f;
-        public float minVert = -90.0f;
+        public float minVert = -45.0f;
 
         private float _rotationX;
 
