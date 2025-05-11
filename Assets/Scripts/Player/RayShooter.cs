@@ -8,13 +8,10 @@ namespace Player
     {
         private Camera _camera;
         [SerializeField] private float pickupDistance = 3f;
-        private bool _showPickupPrompt = false;
         
         private void Start()
         {
-            _camera = GetComponent<Camera>();
-            if(_camera == null)
-                Debug.Log($"{nameof(Camera)} is null");
+            _camera = GetComponentInChildren<Camera>();
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -47,47 +44,16 @@ namespace Player
             }
             
             // Проверка на возможность подобрать предмет
-            if (Physics.Raycast(ray, out hit, pickupDistance))
+            if (!Physics.Raycast(ray, out hit, pickupDistance)) 
+                return;
+            // Проверяем, что объект имеет тег "AK47" или другой подходящий тег
+            if (!hit.transform.CompareTag("Weapon") && !hit.transform.CompareTag("Item") &&
+                !hit.transform.name.Contains("AK47")) 
+                return;
+            // Если нажата клавиша E - подбираем предмет
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                // Проверяем, что объект имеет тег "AK47" или другой подходящий тег
-                if (hit.transform.CompareTag("Weapon") || hit.transform.CompareTag("Item") || hit.transform.name.Contains("AK47"))
-                {
-                    // Отображаем подсказку, если смотрим на объект, который можно подобрать
-                    DisplayPickupPrompt(true);
-                    
-                    // Если нажата клавиша E - подбираем предмет
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        PickupItem(hit.transform.gameObject);
-                    }
-                }
-                else
-                {
-                    DisplayPickupPrompt(false);
-                }
-            }
-            else
-            {
-                DisplayPickupPrompt(false);
-            }
-        }
-
-        private void OnGUI()
-        {
-            var size = 24;
-            var posX = _camera.pixelWidth / 2 - size / 4;
-            var posY = _camera.pixelHeight / 2 - size / 2;
-            GUI.Label(new Rect(posX, posY, size, size), "*");
-            
-            // Отображение подсказки для подбора предмета
-            if (_showPickupPrompt)
-            {
-                int promptWidth = 200;
-                int promptHeight = 30;
-                int promptX = _camera.pixelWidth / 2 - promptWidth / 2;
-                int promptY = _camera.pixelHeight / 2 + 30;
-                
-                GUI.Label(new Rect(promptX, promptY, promptWidth, promptHeight), "Нажмите E, чтобы подобрать");
+                PickupItem(hit.transform.gameObject);
             }
         }
 
@@ -99,11 +65,6 @@ namespace Player
             yield return new WaitForSeconds(6);
                 
             Destroy(sphere);
-        }
-        
-        private void DisplayPickupPrompt(bool show)
-        {
-            _showPickupPrompt = show;
         }
         
         private void PickupItem(GameObject itemObject)

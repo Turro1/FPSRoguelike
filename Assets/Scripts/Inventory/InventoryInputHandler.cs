@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using EvolveGames;
+using Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,15 +10,13 @@ namespace Inventory
         public GameObject inventoryUiGameObject;
         public bool isInventoryOpen = false;
         [FormerlySerializedAs("Player")] public GameObject player;
-
-        private MouseLook _mouseLook;
-        private FPSController _fpsController;
+        
+        private PlayerController _playerController;
         private RayShooter _rayShooter;
 
         private void Start()
         {
-            _mouseLook = player.GetComponent<MouseLook>();
-            _fpsController = player.GetComponent<FPSController>();
+            _playerController = player.GetComponent<PlayerController>();
             _rayShooter = player.GetComponent<RayShooter>();
             if (inventoryUiGameObject == null)
             {
@@ -34,9 +33,7 @@ namespace Inventory
                 {
                     inventoryUiGameObject.SetActive(isInventoryOpen);
                     isInventoryOpen = false;
-                    
-                    _mouseLook.enabled = false;
-                    _fpsController.enabled = false;
+                    _playerController.enabled = false;
                     _rayShooter.enabled = false;
                     
                     Cursor.visible = true;
@@ -48,8 +45,7 @@ namespace Inventory
                     inventoryUiGameObject.SetActive(isInventoryOpen);
                     isInventoryOpen = true;
                     
-                    _mouseLook.enabled = true;
-                    _fpsController.enabled = true;
+                    _playerController.enabled = true;
                     _rayShooter.enabled = true; 
                     
                     Cursor.visible = false;
